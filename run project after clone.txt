@@ -1,0 +1,3 @@
+how o first run project:
+-in server explorer window select file "Database.mdf" and in properties window fing and copy connection string.
+-in file form1.cs fing initialization connection string(now it's 21 row) and put them your version of connection string.
