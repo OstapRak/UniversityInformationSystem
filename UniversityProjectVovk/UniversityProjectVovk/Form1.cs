@@ -12,6 +12,7 @@ using UniversityProjectVovk.ClassesForms;
 using System.Reflection;
 //using UniversityProjectVovk.assignmentForms;
 using UniversityProjectVovk.Functional1;
+using System.Diagnostics;
 
 namespace UniversityProjectVovk
 {
@@ -25,6 +26,23 @@ namespace UniversityProjectVovk
         private string update = "Update";
         private string delete = "Delete";
         private List<string> classes;
+
+        private string getConnectionString(string serverName)
+        {
+            switch (serverName)
+            {
+                case "server1":
+                    return @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=L:\UniversityInformationSystem\UniversityProjectVovk\UniversityProjectVovk\Database1.mdf;Integrated Security=True;Connect Timeout=30";
+                case "server2":
+                    return @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=L:\UniversityInformationSystem\UniversityProjectVovk\UniversityProjectVovk\Database2.mdf;Integrated Security=True;Connect Timeout=30";
+                case "server3":
+                    return @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=L:\UniversityInformationSystem\UniversityProjectVovk\UniversityProjectVovk\Database3.mdf;Integrated Security=True;Connect Timeout=30";
+                    dafault:
+                    Debug.Assert(false, "Incorrect server name");
+            }
+            return "";
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -379,6 +397,8 @@ namespace UniversityProjectVovk
             int id = ((selectNode.Tag as NodeData).Object).Id;
             string connectionString = (selectNode.Tag as NodeData).ConnectionString;
 
+            List<TreeNode> addedLinqs = new List<TreeNode>();
+
             if (id >= 0)
             {
                 string queryString =
@@ -400,18 +420,57 @@ namespace UniversityProjectVovk
                             t.Class = reader[2].ToString();
                             t.Major = int.Parse(reader[3].ToString());
                             TreeNode node = new TreeNode(reader[1].ToString());
+                            string newConnectionString = connectionString;
+                            
+                            //{
+                            //    string queryString1 = "SELECT Server FROM dbo.Linq where Id = '" + t.Id + "';";
+                            //    SqlCommand command1 = new SqlCommand(queryString1, connection);
+                            //    SqlDataReader reader1 = command1.ExecuteReader();
+                            //    string servername = "";
+                            //    while (reader1.Read())
+                            //    {
+                            //        servername = reader[0].ToString();
+                            //        break;
+                            //    }
+                            //    newConnectionString = getConnectionString(servername);
+                            //}
+
                             NodeData nodeData = new NodeData(connectionString, t);
                             node.Tag = nodeData;
                             node.ContextMenuStrip = contextMenuStrip1;
+
                             //node.ContextMenuStrip.Items.Add(add);
                             //node.ContextMenuStrip.Items.Add(update);
                             //node.ContextMenuStrip.Items.Add(delete);
                             node.ContextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(contextMenu_ItemClicked);
                             //(node.ContextMenuStrip.Items[0] as ToolStripMenuItem).DropDownItemClicked += new ToolStripItemClickedEventHandler(contextMenu_ItemClicked);
                             selectNode.Nodes.Add(node);
+                            if (t.Class == "Linq")
+                            {
+                                addedLinqs.Add(node);
+                            }
+
                         }
                         selectNode.Expand();
                         reader.Close();
+                        connection.Close();
+
+                        foreach(var iter in addedLinqs)
+                        {
+                            string queryString1 = "SELECT Server FROM dbo.Linq where Id = '" + (iter.Tag as NodeData).Object.Id + "';";
+                            SqlCommand command1 = new SqlCommand(queryString1, connection);
+                            connection.Open();
+                            reader = command1.ExecuteReader();
+                            string servername = "";
+                            while (reader.Read())
+                            {
+                                servername = reader[0].ToString();
+                                break;
+                            }
+                            (iter.Tag as NodeData).ConnectionString = getConnectionString(servername);
+                            reader.Close();
+                            connection.Close();
+                        }
                     }
                     catch (Exception ex)
                     {
