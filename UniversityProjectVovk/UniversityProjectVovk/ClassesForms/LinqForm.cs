@@ -16,13 +16,14 @@ namespace UniversityProjectVovk.ClassesForms
         public LinqForm()
         {
             InitializeComponent();
+            listBox1.Items.Add("server1");
+            listBox1.Items.Add("server2");
+            listBox1.Items.Add("server3");
         }
 
         private void LinqForm_Load(object sender, EventArgs e)
         {
-            listBox1.Items.Add("server1");
-            listBox1.Items.Add("server2");
-            listBox1.Items.Add("server3");
+            
         }
 
         protected override void open()
@@ -38,9 +39,10 @@ namespace UniversityProjectVovk.ClassesForms
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        foreach(var i in listBox1.Items)
+                        string servername = reader[0].ToString();
+                        foreach (var i in listBox1.Items)
                         {
-                            if(i.ToString() == reader[0].ToString())
+                            if(i.ToString() == servername)
                             {
                                 listBox1.SelectedItem = i;
                             }
@@ -114,9 +116,9 @@ namespace UniversityProjectVovk.ClassesForms
             this.Close();
         }
 
-        
+        private void button1_Click_1(object sender, EventArgs e)
+        {
 
-
-
+        }
     }
 }

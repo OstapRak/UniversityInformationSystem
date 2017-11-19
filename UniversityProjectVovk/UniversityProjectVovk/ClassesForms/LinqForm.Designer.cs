@@ -35,6 +35,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(0, 141);
             this.button1.Size = new System.Drawing.Size(198, 23);
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // listBox1
             // 
