@@ -134,6 +134,12 @@
     <Compile Include="ClassesForms\LeadershipForm.Designer.cs">
       <DependentUpon>LeadershipForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ClassesForms\LinqForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClassesForms\LinqForm.Designer.cs">
+      <DependentUpon>LinqForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClassesForms\LiteratureForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -308,6 +314,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ClassesForms\LeadershipForm.resx">
       <DependentUpon>LeadershipForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassesForms\LinqForm.resx">
+      <DependentUpon>LinqForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassesForms\LiteratureForm.resx">
       <DependentUpon>LiteratureForm.cs</DependentUpon>

@@ -37,8 +37,8 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(0, 49);
-            this.button1.Size = new System.Drawing.Size(207, 23);
+            this.button1.Location = new System.Drawing.Point(0, 74);
+            this.button1.Size = new System.Drawing.Size(208, 23);
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -78,9 +78,9 @@
             // button11
             // 
             this.button11.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button11.Location = new System.Drawing.Point(0, 72);
+            this.button11.Location = new System.Drawing.Point(0, 97);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(207, 23);
+            this.button11.Size = new System.Drawing.Size(208, 23);
             this.button11.TabIndex = 0;
             this.button11.Text = "save";
             this.button11.UseVisualStyleBackColor = true;
@@ -90,7 +90,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(207, 95);
+            this.ClientSize = new System.Drawing.Size(208, 120);
             this.Controls.Add(this.secondNameText);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.firstNameText);

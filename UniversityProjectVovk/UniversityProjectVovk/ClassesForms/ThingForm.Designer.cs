@@ -32,6 +32,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(0, 80);
+            this.button1.Size = new System.Drawing.Size(189, 23);
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // PurposeText
             // 
             this.PurposeText.Location = new System.Drawing.Point(57, 41);
@@ -58,6 +64,9 @@
             this.Name = "ThingForm";
             this.Text = "ThingForm";
             this.Load += new System.EventHandler(this.ThingForm_Load);
+            this.Controls.SetChildIndex(this.textBox1, 0);
+            this.Controls.SetChildIndex(this.button1, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.PurposeText, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.ResumeLayout(false);

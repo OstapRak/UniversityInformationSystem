@@ -18,7 +18,7 @@ namespace UniversityProjectVovk
 
    public partial class Form1 : Form
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=L:\UniversityInformationSystem\UniversityProjectVovk\UniversityProjectVovk\Database1.mdf;Integrated Security=True;Connect Timeout=30";
+        private string StartConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=L:\UniversityInformationSystem\UniversityProjectVovk\UniversityProjectVovk\Database1.mdf;Integrated Security=True;Connect Timeout=30";
         //private string connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename='E:\projects 2016-2017\UniversityProjectVovk\UniversityProjectVovk\Database1.mdf';Integrated Security=True";
         public TreeNode selectNode;
         private string add = "Add";
@@ -31,6 +31,7 @@ namespace UniversityProjectVovk
             InitializeTree();
             classes = new List<string>();
             classes.Add("Object");
+            classes.Add("Linq");
             classes.Add("People");
             classes.Add("Connect to university people");
             classes.Add("Worker");
@@ -129,7 +130,10 @@ namespace UniversityProjectVovk
                case "Object":
                    f = new ObjectForm();
                    break;
-               case "People":
+                case "Linq":
+                    f = new LinqForm();
+                    break;
+                case "People":
                    f = new PeopleForm();
                    break;
                case "ConnectToUniversityPeople":
@@ -218,7 +222,8 @@ namespace UniversityProjectVovk
             if(classes.Contains(item.Text))
             {
                 BaseForm f = getForm(item.Text);
-                f.connectionString = connectionString;
+
+                f.connectionString = (selectNode.Tag as NodeData).ConnectionString;
                 f.node = selectNode;
                 f.Show();
             }
@@ -295,7 +300,7 @@ namespace UniversityProjectVovk
                "SELECT Id, Name, Class, Major from dbo.TObject "
                    + "WHERE Major IS NULL";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(StartConnectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 try
@@ -314,7 +319,7 @@ namespace UniversityProjectVovk
                         }
                         catch { }
                         TreeNode node = new TreeNode(t.Name.ToString());
-                        NodeData nodeData = new NodeData(connectionString, t);
+                        NodeData nodeData = new NodeData(StartConnectionString, t);
                         node.Tag = nodeData;
                         node.ContextMenuStrip = contextMenuStrip1;
                         //node.ContextMenuStrip.Items.Add(add);
@@ -370,27 +375,10 @@ namespace UniversityProjectVovk
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             selectNode = e.Node;
-            //string queryString =
-            //   "SELECT Id from dbo.TObject "
-            //       + "WHERE Name = '" + selectNode.Text + "'";
+           
             int id = ((selectNode.Tag as NodeData).Object).Id;
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    SqlCommand command = new SqlCommand(queryString, connection);
-            //    try
-            //    {
-            //        connection.Open();
-            //        SqlDataReader reader = command.ExecuteReader();
-            //        while (reader.Read())
-            //        {
-            //            id = int.Parse(reader[0].ToString());                            
-            //        }
-            //        reader.Close();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //    }
-            //}
+            string connectionString = (selectNode.Tag as NodeData).ConnectionString;
+
             if (id >= 0)
             {
                 string queryString =
@@ -445,6 +433,7 @@ namespace UniversityProjectVovk
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BaseForm f = getForm((selectNode.Tag as NodeData).Object.Class);
+            string connectionString =(selectNode.Tag as NodeData).ConnectionString;
             f.isEdit = true;
             f.node = selectNode;
             f.connectionString = connectionString;
@@ -454,6 +443,7 @@ namespace UniversityProjectVovk
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BaseForm f = getForm((selectNode.Tag as NodeData).Object.Class);
+            string connectionString = (selectNode.Tag as NodeData).ConnectionString;
             f.isEdit = true;
             f.node = selectNode;
             f.connectionString = connectionString;
@@ -467,6 +457,7 @@ namespace UniversityProjectVovk
         private void assignmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             APeopleForm1 f = getAForm((selectNode.Tag as NodeData).Object.Class); //= new ATeacherForm1();
+            string connectionString = (selectNode.Tag as NodeData).ConnectionString;
             if (f != null)
             {
                 f.node = selectNode;

@@ -99,5 +99,10 @@ namespace UniversityProjectVovk.ClassesForms
             save("Thing");
             this.Close();
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
