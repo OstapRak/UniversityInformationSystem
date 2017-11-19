@@ -20,8 +20,8 @@ namespace UniversityProjectVovk.Functional1
 
         private void AConnectPeopleForm1_Load(object sender, EventArgs e)
         {
-            int ownerId = (node.Tag as TObject).Id;
-            string queryString = "SELECT StartTime, EndTime, Place, Purpos FROM dbo.Assignment INNER JOIN dbo.AConnect ON dbo.Assignment.Id = dbo.AConnect.Id  where OwnerId = '" + (node.Tag as TObject).Id + "';";
+            int ownerId = (node.Tag as NodeData).Object.Id;
+            string queryString = "SELECT StartTime, EndTime, Place, Purpos FROM dbo.Assignment INNER JOIN dbo.AConnect ON dbo.Assignment.Id = dbo.AConnect.Id  where OwnerId = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -57,8 +57,8 @@ namespace UniversityProjectVovk.Functional1
 
         protected override void open()
         {
-            int ownerId = (node.Tag as TObject).Id;
-            string queryString = "SELECT StartTime, EndTime, Place, Purpos FROM dbo.Assignment INNER JOIN dbo.AConnect ON dbo.Assignment.Id = dbo.AConnect.Id  where OwnerId = '" + (node.Tag as TObject).Id + "';";
+            int ownerId = (node.Tag as NodeData).Object.Id;
+            string queryString = "SELECT StartTime, EndTime, Place, Purpos FROM dbo.Assignment INNER JOIN dbo.AConnect ON dbo.Assignment.Id = dbo.AConnect.Id  where OwnerId = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -94,7 +94,6 @@ namespace UniversityProjectVovk.Functional1
 
         private void button1_Click(object sender, EventArgs e)
         {
-           // if ((node.Tag as TObject).Class == "ConnectToUniversityPeople")
             {
                 save();
                 AConnectPeopleForm1_Load(sender, e);

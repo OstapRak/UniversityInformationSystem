@@ -28,7 +28,7 @@ namespace UniversityProjectVovk.ClassesForms
 
         public override void delete()
         {
-            string queryString = "DELETE FROM dbo.TObject where Id = '" + (node.Tag as TObject).Id + "';";
+            string queryString = "DELETE FROM dbo.TObject where Id = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -46,7 +46,7 @@ namespace UniversityProjectVovk.ClassesForms
 
         protected virtual void open()
         {
-            string queryString = "SELECT Name FROM dbo.TObject where Id = '" + (node.Tag as TObject).Id + "';";
+            string queryString = "SELECT Name FROM dbo.TObject where Id = '" + (node.Tag as NodeData).Object.Id + "';";
             int newid = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -77,13 +77,13 @@ namespace UniversityProjectVovk.ClassesForms
             int newid;
             if (isEdit)
             {
-                newid = (node.Tag as TObject).Id;
-                id = (int)(node.Tag as TObject).Major;
+                newid = (node.Tag as NodeData).Object.Id;
+                id = (int)(node.Tag as NodeData).Object.Major;
                 delete();
             }
             else
             {
-                id = (node.Tag as TObject).Id;
+                id = (node.Tag as NodeData).Object.Id;
                 string queryString = "SELECT MAX(Id) FROM dbo.TObject";
                 newid = -1;
                 using (SqlConnection connection = new SqlConnection(connectionString))

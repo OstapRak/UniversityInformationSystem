@@ -21,11 +21,10 @@ namespace UniversityProjectVovk.Functional
 
         private void FacultyForm_Load(object sender, EventArgs e)
         {
-            int ownerId = (node.Tag as TObject).Id;
-            //string queryString = "SELECT StartTime, EndTime, Place FROM dbo.Assignment where OwnerId = '" + (node.Tag as TObject).Id + "';";
+            int ownerId = (node.Tag as NodeData).Object.Id;
             string queryString =
                     "SELECT Id, Name, Class, Major from dbo.TObject "
-                        + "WHERE Major = '" + (node.Tag as TObject).Id + "'";
+                        + "WHERE Major = '" + (node.Tag as NodeData).Object.Id + "'";
             List<People> peoples = new List<People>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

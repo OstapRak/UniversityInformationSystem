@@ -18,7 +18,7 @@ namespace UniversityProjectVovk
 
    public partial class Form1 : Form
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=L:\UniversityInformationSystem\UniversityProjectVovk\UniversityProjectVovk\Database1.mdf;Integrated Security=True";
+        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=L:\UniversityInformationSystem\UniversityProjectVovk\UniversityProjectVovk\Database1.mdf;Integrated Security=True;Connect Timeout=30";
         //private string connectionString = @"Data Source=(LocalDB)\v11.0;AttachDbFilename='E:\projects 2016-2017\UniversityProjectVovk\UniversityProjectVovk\Database1.mdf';Integrated Security=True";
         public TreeNode selectNode;
         private string add = "Add";
@@ -314,7 +314,8 @@ namespace UniversityProjectVovk
                         }
                         catch { }
                         TreeNode node = new TreeNode(t.Name.ToString());
-                        node.Tag = t;
+                        NodeData nodeData = new NodeData(connectionString, t);
+                        node.Tag = nodeData;
                         node.ContextMenuStrip = contextMenuStrip1;
                         //node.ContextMenuStrip.Items.Add(add);
                         ////foreach(var it in classes)
@@ -372,7 +373,7 @@ namespace UniversityProjectVovk
             //string queryString =
             //   "SELECT Id from dbo.TObject "
             //       + "WHERE Name = '" + selectNode.Text + "'";
-            int id = (selectNode.Tag as TObject).Id;
+            int id = ((selectNode.Tag as NodeData).Object).Id;
             //using (SqlConnection connection = new SqlConnection(connectionString))
             //{
             //    SqlCommand command = new SqlCommand(queryString, connection);
@@ -411,7 +412,8 @@ namespace UniversityProjectVovk
                             t.Class = reader[2].ToString();
                             t.Major = int.Parse(reader[3].ToString());
                             TreeNode node = new TreeNode(reader[1].ToString());
-                            node.Tag = t;
+                            NodeData nodeData = new NodeData(connectionString, t);
+                            node.Tag = nodeData;
                             node.ContextMenuStrip = contextMenuStrip1;
                             //node.ContextMenuStrip.Items.Add(add);
                             //node.ContextMenuStrip.Items.Add(update);
@@ -442,7 +444,7 @@ namespace UniversityProjectVovk
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BaseForm f = getForm((selectNode.Tag as TObject).Class);
+            BaseForm f = getForm((selectNode.Tag as NodeData).Object.Class);
             f.isEdit = true;
             f.node = selectNode;
             f.connectionString = connectionString;
@@ -451,7 +453,7 @@ namespace UniversityProjectVovk
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BaseForm f = getForm((selectNode.Tag as TObject).Class);
+            BaseForm f = getForm((selectNode.Tag as NodeData).Object.Class);
             f.isEdit = true;
             f.node = selectNode;
             f.connectionString = connectionString;
@@ -464,7 +466,7 @@ namespace UniversityProjectVovk
 
         private void assignmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            APeopleForm1 f = getAForm((selectNode.Tag as TObject).Class); //= new ATeacherForm1();
+            APeopleForm1 f = getAForm((selectNode.Tag as NodeData).Object.Class); //= new ATeacherForm1();
             if (f != null)
             {
                 f.node = selectNode;
@@ -473,14 +475,14 @@ namespace UniversityProjectVovk
             }
             else
             {
-                if( (selectNode.Tag as TObject).Class == "GroupOfPeople")
+                if( (selectNode.Tag as NodeData).Object.Class == "GroupOfPeople")
                 {
                     UniversityProjectVovk.Functional.GroupOfPeopleForm f1 = new UniversityProjectVovk.Functional.GroupOfPeopleForm();
                     f1.node = selectNode;
                     f1.connectionString = connectionString;
                     f1.Show();
                 }
-                if ((selectNode.Tag as TObject).Class == "Faculty")
+                if ((selectNode.Tag as NodeData).Object.Class == "Faculty")
                 {
                     UniversityProjectVovk.Functional.GroupOfPeopleForm f1 = new UniversityProjectVovk.Functional.FacultyForm();
                     f1.node = selectNode;

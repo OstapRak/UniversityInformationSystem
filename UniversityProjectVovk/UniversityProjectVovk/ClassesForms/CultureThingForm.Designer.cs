@@ -36,6 +36,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(0, 165);
             this.button1.Size = new System.Drawing.Size(186, 23);
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // DescriptionText
             // 
@@ -64,6 +65,7 @@
             this.Name = "CultureThingForm";
             this.Text = "CultureThingForm";
             this.Load += new System.EventHandler(this.CultureThingForm_Load);
+            this.Controls.SetChildIndex(this.PurposeText, 0);
             this.Controls.SetChildIndex(this.textBox1, 0);
             this.Controls.SetChildIndex(this.button1, 0);
             this.Controls.SetChildIndex(this.label1, 0);

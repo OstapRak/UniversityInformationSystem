@@ -22,8 +22,8 @@ namespace UniversityProjectVovk.Functional1
 
         protected virtual void open()
         {
-            int ownerId = (node.Tag as TObject).Id;
-            string queryString = "SELECT StartTime, EndTime, Place FROM dbo.Assignment where OwnerId = '" + (node.Tag as TObject).Id + "';";
+            int ownerId = (node.Tag as NodeData).Object.Id;
+            string queryString = "SELECT StartTime, EndTime, Place FROM dbo.Assignment where OwnerId = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -57,8 +57,8 @@ namespace UniversityProjectVovk.Functional1
 
         private void APeopleForm1_Load(object sender, EventArgs e)
         {
-            int ownerId = (node.Tag as TObject).Id;
-            string queryString = "SELECT StartTime, EndTime, Place FROM dbo.Assignment where OwnerId = '" + (node.Tag as TObject).Id + "';";
+            int ownerId = (node.Tag as NodeData).Object.Id;
+            string queryString = "SELECT StartTime, EndTime, Place FROM dbo.Assignment where OwnerId = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -92,7 +92,7 @@ namespace UniversityProjectVovk.Functional1
 
         public virtual int save()
         {
-            int ownerId = (node.Tag as TObject).Id;
+            int ownerId = (node.Tag as NodeData).Object.Id;
             string queryString = "SELECT MAX(Id) FROM dbo.Assignment";
             int newid = -1;
             using (SqlConnection connection = new SqlConnection(connectionString))

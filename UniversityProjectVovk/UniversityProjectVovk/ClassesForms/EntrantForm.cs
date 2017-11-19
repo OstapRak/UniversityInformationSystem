@@ -21,7 +21,7 @@ namespace UniversityProjectVovk.ClassesForms
         protected override void open()
         {
  	         base.open();
-             string queryString = "SELECT Marks FROM dbo.Entrant where Id = '" + (node.Tag as TObject).Id + "';";
+             string queryString = "SELECT Marks FROM dbo.Entrant where Id = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -52,7 +52,7 @@ namespace UniversityProjectVovk.ClassesForms
         public override void delete()
         {
             base.delete();
-            string queryString = "DELETE FROM dbo.Entrant where Id = '" + (node.Tag as TObject).Id + "';";
+            string queryString = "DELETE FROM dbo.Entrant where Id = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);

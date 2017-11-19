@@ -32,18 +32,18 @@ namespace UniversityProjectVovk.ClassesForms
             {
                 delete();
             }
-            //int id = (node.Tag as TObject).Id;
+            
             int newid = -1;
             int id = -1;
             if (isEdit)
             {
-                newid = (node.Tag as TObject).Id;
-                id = (int)(node.Tag as TObject).Major;
+                newid = (node.Tag as NodeData).Object.Id;
+                id = (int)(node.Tag as NodeData).Object.Major;
                 delete();
             }
             else
             {
-                id = (node.Tag as TObject).Id;
+                id = (node.Tag as NodeData).Object.Id;
                 string queryString1 = "SELECT MAX(Id) FROM dbo.TObject";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -109,7 +109,7 @@ namespace UniversityProjectVovk.ClassesForms
         public override void delete()
         {
             base.delete();
-            string queryString = "DELETE FROM dbo.People where Id = '" + (node.Tag as TObject).Id + "';";
+            string queryString = "DELETE FROM dbo.People where Id = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -128,7 +128,7 @@ namespace UniversityProjectVovk.ClassesForms
         protected override void open()
         {
  	         base.open();
-             string queryString = "SELECT FirstName, SecondName FROM dbo.People where Id = '" + (node.Tag as TObject).Id + "';";
+             string queryString = "SELECT FirstName, SecondName FROM dbo.People where Id = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);

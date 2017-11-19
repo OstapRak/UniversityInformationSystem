@@ -21,7 +21,7 @@ namespace UniversityProjectVovk.ClassesForms
         protected override void open()
         {
             base.open();
-            string queryString = "SELECT Description FROM dbo.ConnectToUniversityPeople where Id = '" + (node.Tag as TObject).Id + "';";
+            string queryString = "SELECT Description FROM dbo.ConnectToUniversityPeople where Id = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -53,7 +53,7 @@ namespace UniversityProjectVovk.ClassesForms
         public override void delete()
         {
             base.delete();
-            string queryString = "DELETE FROM dbo.ConnectToUniversityPeople where Id = '" + (node.Tag as TObject).Id + "';";
+            string queryString = "DELETE FROM dbo.ConnectToUniversityPeople where Id = '" + (node.Tag as NodeData).Object.Id + "';";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -76,7 +76,7 @@ namespace UniversityProjectVovk.ClassesForms
                 delete();
             }
             int newid = base.save(OClass);
-            int id = (node.Tag as TObject).Id;
+            int id = (node.Tag as NodeData).Object.Id;
             string queryString = "INSERT INTO dbo.ConnectToUniversityPeople(Id, Description) "
                    + "VALUES('" + newid + "','" + richTextBox1.Text + "')";
 
